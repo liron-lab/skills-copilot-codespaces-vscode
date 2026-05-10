@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>גלידה כשרה בתל אביב</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <span class="logo">🍦</span>
+      <div>
+        <h1>גלידה כשרה בתל אביב</h1>
+        <p class="subtitle">מצא את גלידריית הכשרה הקרובה אליך</p>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="search-bar-section">
+      <input
+        type="text"
+        id="searchInput"
+        placeholder="חפש לפי שם, שכונה או סוג..."
+        aria-label="חפש גלידריה"
+      />
+    </section>
+
+    <section class="filters">
+      <button class="filter-btn active" data-filter="all">הכל</button>
+      <button class="filter-btn" data-filter="mehadrin">מהדרין</button>
+      <button class="filter-btn" data-filter="rabbinate">רבנות</button>
+      <button class="filter-btn" data-filter="chalav-yisrael">חלב ישראל</button>
+      <button class="filter-btn" data-filter="pareve">פרווה</button>
+    </section>
+
+    <section class="results-info">
+      <span id="resultsCount"></span>
+    </section>
+
+    <section class="cards-grid" id="cardsGrid"></section>
+
+    <section class="empty-state hidden" id="emptyState">
+      <span class="empty-icon">🔍</span>
+      <p>לא נמצאו גלידריות התואמות את החיפוש</p>
+    </section>
+  </main>
+
+  <footer>
+    <p>המידע נועד להדגמה בלבד. בדוק תמיד את תוקף תעודת הכשרות לפני הביקור.</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
