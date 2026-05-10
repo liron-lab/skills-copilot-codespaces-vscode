@@ -1,0 +1,253 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: #f5f0eb;
+  color: #333;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header */
+header {
+  background: linear-gradient(135deg, #e8763a, #f4a35b);
+  color: white;
+  padding: 24px 20px;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.15);
+}
+
+.header-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.logo {
+  font-size: 3rem;
+  line-height: 1;
+}
+
+h1 {
+  font-size: 1.9rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.subtitle {
+  font-size: 0.95rem;
+  opacity: 0.88;
+  margin-top: 4px;
+}
+
+/* Main */
+main {
+  flex: 1;
+  max-width: 900px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 24px 16px;
+}
+
+/* Search */
+.search-bar-section {
+  margin-bottom: 18px;
+}
+
+#searchInput {
+  width: 100%;
+  padding: 14px 18px;
+  font-size: 1rem;
+  border: 2px solid #ddd;
+  border-radius: 12px;
+  outline: none;
+  transition: border-color 0.2s;
+  background: white;
+  text-align: right;
+  direction: rtl;
+}
+
+#searchInput:focus {
+  border-color: #e8763a;
+}
+
+/* Filters */
+.filters {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+
+.filter-btn {
+  padding: 8px 18px;
+  border: 2px solid #e8763a;
+  border-radius: 20px;
+  background: white;
+  color: #e8763a;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.18s;
+}
+
+.filter-btn:hover,
+.filter-btn.active {
+  background: #e8763a;
+  color: white;
+}
+
+/* Results info */
+.results-info {
+  margin-bottom: 14px;
+  font-size: 0.88rem;
+  color: #777;
+}
+
+/* Cards grid */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+/* Card */
+.card {
+  background: white;
+  border-radius: 14px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  overflow: hidden;
+  transition: transform 0.18s, box-shadow 0.18s;
+  cursor: default;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 22px rgba(0,0,0,0.13);
+}
+
+.card-header {
+  background: linear-gradient(135deg, #fde8d8, #fdf0e8);
+  padding: 18px 16px 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.card-icon {
+  font-size: 2rem;
+}
+
+.card-name {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #333;
+}
+
+.card-neighborhood {
+  font-size: 0.82rem;
+  color: #888;
+  margin-top: 2px;
+}
+
+.card-body {
+  padding: 14px 16px;
+}
+
+.card-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin-bottom: 8px;
+  font-size: 0.88rem;
+  color: #555;
+}
+
+.card-row:last-child {
+  margin-bottom: 0;
+}
+
+.card-row .icon {
+  font-size: 1rem;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.badge-row {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+
+.badge {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.76rem;
+  font-weight: 600;
+}
+
+.badge-mehadrin  { background: #d4edda; color: #1a6b2f; }
+.badge-rabbinate { background: #cce5ff; color: #0057a8; }
+.badge-chalav    { background: #fff3cd; color: #7a5a00; }
+.badge-pareve    { background: #f0e6ff; color: #5a2d82; }
+
+.card-footer {
+  padding: 10px 16px 14px;
+}
+
+.map-link {
+  display: inline-block;
+  padding: 7px 16px;
+  background: #e8763a;
+  color: white;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: background 0.18s;
+}
+
+.map-link:hover {
+  background: #cf6022;
+}
+
+/* Empty state */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: #999;
+}
+
+.empty-icon {
+  font-size: 3rem;
+  display: block;
+  margin-bottom: 12px;
+}
+
+.hidden {
+  display: none;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 18px;
+  font-size: 0.8rem;
+  color: #aaa;
+  border-top: 1px solid #e8e8e8;
+  background: white;
+}
+
+/* Responsive */
+@media (max-width: 500px) {
+  h1 { font-size: 1.4rem; }
+  .logo { font-size: 2.2rem; }
+  .cards-grid { grid-template-columns: 1fr; }
+}
