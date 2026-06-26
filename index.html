@@ -3,52 +3,53 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>גלידה כשרה בתל אביב</title>
+  <title>מוצא סאבלט בתל אביב</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+
   <header>
     <div class="header-inner">
-      <span class="logo">🍦</span>
+      <span class="logo">🏖️</span>
       <div>
-        <h1>גלידה כשרה בתל אביב</h1>
-        <p class="subtitle">מצא את גלידריית הכשרה הקרובה אליך</p>
+        <h1>מוצא סאבלט בתל אביב</h1>
+        <p class="subtitle">חיפוש חכם – יולי 2026 · 2 חדרים · עד 15 דקות הליכה מהים</p>
       </div>
+    </div>
+
+    <div class="criteria-bar">
+      <span class="chip">📅 יולי 2026</span>
+      <span class="chip">🛏️ 2 חדרים</span>
+      <span class="chip">💰 5,000–8,000 ₪</span>
+      <span class="chip">🚶 עד 15 דקות מהים</span>
     </div>
   </header>
 
   <main>
-    <section class="search-bar-section">
-      <input
-        type="text"
-        id="searchInput"
-        placeholder="חפש לפי שם, שכונה או סוג..."
-        aria-label="חפש גלידריה"
-      />
+
+    <!-- Platforms -->
+    <section class="section">
+      <h2 class="section-title">חפש עכשיו בפלטפורמות</h2>
+      <div class="platforms-grid" id="platformsGrid"></div>
     </section>
 
-    <section class="filters">
-      <button class="filter-btn active" data-filter="all">הכל</button>
-      <button class="filter-btn" data-filter="mehadrin">מהדרין</button>
-      <button class="filter-btn" data-filter="rabbinate">רבנות</button>
-      <button class="filter-btn" data-filter="chalav-yisrael">חלב ישראל</button>
-      <button class="filter-btn" data-filter="pareve">פרווה</button>
+    <!-- Neighborhoods -->
+    <section class="section">
+      <h2 class="section-title">שכונות מומלצות קרוב לים</h2>
+      <p class="section-sub">כל השכונות האלו נמצאות במרחק 15 דקות הליכה או פחות מהחוף</p>
+      <div class="neighborhoods-grid" id="neighborhoodsGrid"></div>
     </section>
 
-    <section class="results-info">
-      <span id="resultsCount"></span>
+    <!-- Tips -->
+    <section class="section tips-section">
+      <h2 class="section-title">טיפים למציאת סאבלט</h2>
+      <ul class="tips-list" id="tipsList"></ul>
     </section>
 
-    <section class="cards-grid" id="cardsGrid"></section>
-
-    <section class="empty-state hidden" id="emptyState">
-      <span class="empty-icon">🔍</span>
-      <p>לא נמצאו גלידריות התואמות את החיפוש</p>
-    </section>
   </main>
 
   <footer>
-    <p>המידע נועד להדגמה בלבד. בדוק תמיד את תוקף תעודת הכשרות לפני הביקור.</p>
+    <p>הקישורים פותחים חיפוש ישיר בכל פלטפורמה עם הפרמטרים שלך. המחירים ותאריכים הזמינות עשויים להשתנות.</p>
   </footer>
 
   <script src="app.js"></script>
