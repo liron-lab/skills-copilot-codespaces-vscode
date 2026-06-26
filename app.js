@@ -1,245 +1,207 @@
-const shops = [
+const CRITERIA = {
+  minPrice: 5000,
+  maxPrice: 8000,
+  rooms: 2,
+  city: "תל אביב",
+  monthLabel: "יולי 2026",
+  walkMinutes: 15,
+};
+
+// Yad2 – sublet category: topArea=2 (Tel Aviv district), area=1, city=5000 (Tel Aviv)
+// rooms param: 2-2, price: 5000-8000, property=sublets
+const YAD2_URL =
+  "https://www.yad2.co.il/realestate/sublets?topArea=2&area=1&city=5000" +
+  "&rooms=2-2&price=" + CRITERIA.minPrice + "-" + CRITERIA.maxPrice +
+  "&fromDate=01%2F07%2F2026&toDate=31%2F07%2F2026";
+
+const FACEBOOK_URL =
+  "https://www.facebook.com/marketplace/telaviv/propertyrentals" +
+  "?minPrice=" + CRITERIA.minPrice +
+  "&maxPrice=" + CRITERIA.maxPrice +
+  "&exact=false";
+
+const HOMELESS_URL =
+  "https://www.homeless.co.il/rent/?city=%D7%AA%D7%9C+%D7%90%D7%91%D7%99%D7%91" +
+  "&rooms=2&maxprice=8000";
+
+const KOMO_URL =
+  "https://www.komo.co.il/apartments-for-rent/tel-aviv/?rooms=2&price_max=8000&sublet=1";
+
+const platforms = [
   {
-    id: 1,
-    name: "גלידת פלדמן",
-    neighborhood: "פלורנטין",
-    address: "רחוב פלורנטין 10, תל אביב",
-    phone: "03-555-1001",
-    hours: "ראשון–חמישי 11:00–23:00, שישי 10:00–15:00",
-    kosher: ["mehadrin", "chalav-yisrael"],
-    authority: "בד\"ץ העדה החרדית",
-    flavors: "שוקולד, וניל, תות, פיסטוק, לימון",
-    icon: "🍦",
-    mapsQuery: "פלורנטין 10 תל אביב",
+    name: "יד2 – סאבלט",
+    icon: "🏠",
+    color: "#e84545",
+    description: "האתר הגדול בישראל לנדל\"ן. יש קטגוריית סאבלט ייעודית עם פילטרים לתאריכים.",
+    tips: ["חפש בקטגוריה 'השכרה לטווח קצר'", "הגדר תאריכי כניסה ויציאה ליולי"],
+    url: YAD2_URL,
+    badge: "הכי מומלץ",
   },
   {
-    id: 2,
-    name: "ג'לטו רומא",
-    neighborhood: "נווה צדק",
-    address: "רחוב שבזי 23, נווה צדק, תל אביב",
-    phone: "03-555-2002",
-    hours: "יומי 10:00–24:00",
-    kosher: ["rabbinate"],
-    authority: "רבנות תל אביב",
-    flavors: "ג'לטו איטלקי אמיתי: פרלינה, פיסטוק, מנגו, מוקה",
-    icon: "🍨",
-    mapsQuery: "שבזי 23 נווה צדק תל אביב",
+    name: "Homeless IL",
+    icon: "🔑",
+    color: "#2e7d32",
+    description: "אתר ישראלי ייעודי לסאבלט ושיתוף דירות. מציאות רבות לחודש אחד.",
+    tips: ["עדכן תאריכים ידנית בחיפוש", "צור קשר ישירות עם המשכירים"],
+    url: HOMELESS_URL,
+    badge: "מתמחה בסאבלט",
   },
   {
-    id: 3,
-    name: "ארטיק פרווה",
-    neighborhood: "לב תל אביב",
-    address: "שדרות רוטשילד 45, תל אביב",
-    phone: "03-555-3003",
-    hours: "ראשון–שישי 09:00–22:00",
-    kosher: ["mehadrin", "pareve"],
-    authority: "בד\"ץ מהדרין",
-    flavors: "ארטיקים, גלידה טבעונית, סורבה פירות",
-    icon: "🧊",
-    mapsQuery: "רוטשילד 45 תל אביב",
+    name: "Facebook Marketplace",
+    icon: "📘",
+    color: "#1877f2",
+    description: "קבוצות פייסבוק הן מקור מצוין. חפש גם בקבוצות: 'סאבלט תל אביב' ו-'דירות לטווח קצר ת\"א'.",
+    tips: ["הצטרף לקבוצה: 'סאבלט תל אביב 2025-2026'", "פרסם מודעת 'מחפש' עצמאית"],
+    url: FACEBOOK_URL,
+    badge: null,
   },
   {
-    id: 4,
-    name: "גלידת הכרמל",
-    neighborhood: "שוק הכרמל",
-    address: "שוק הכרמל, דוכן 18, תל אביב",
-    phone: "050-555-4004",
-    hours: "ראשון–שישי 08:00–20:00",
-    kosher: ["rabbinate", "chalav-yisrael"],
-    authority: "רבנות תל אביב–יפו",
-    flavors: "גלידה ביתית: שמנת, שוקולד מריר, קוקוס, קרמל",
-    icon: "🍦",
-    mapsQuery: "שוק הכרמל תל אביב",
-  },
-  {
-    id: 5,
-    name: "פרוסטי",
-    neighborhood: "רמת אביב",
-    address: "דרך נמיר 101, רמת אביב",
-    phone: "03-555-5005",
-    hours: "יומי 11:00–23:30",
-    kosher: ["mehadrin"],
-    authority: "בד\"ץ ירושלים",
-    flavors: "קוקיז & קרים, בנאנה ספליט, קרמל מלוח, מנגו",
-    icon: "🍧",
-    mapsQuery: "דרך נמיר 101 רמת אביב",
-  },
-  {
-    id: 6,
-    name: "סורבה תל אביב",
-    neighborhood: "יפו העתיקה",
-    address: "רחוב יפת 55, יפו",
-    phone: "03-555-6006",
-    hours: "ראשון–שבת 10:00–22:00",
-    kosher: ["rabbinate", "pareve"],
-    authority: "רבנות יפו",
-    flavors: "סורבה טבעי: תפוז, לימון, פסיפלורה, אבטיח",
-    icon: "🍋",
-    mapsQuery: "יפת 55 יפו תל אביב",
-  },
-  {
-    id: 7,
-    name: "בן & ג'ריס כשר",
-    neighborhood: "הצפון הישן",
-    address: "רחוב דיזנגוף 99, תל אביב",
-    phone: "03-555-7007",
-    hours: "ראשון–חמישי 12:00–24:00, שישי 11:00–14:30",
-    kosher: ["mehadrin", "chalav-yisrael"],
-    authority: "בד\"ץ מהדרין",
-    flavors: "צ'אנקי מאנקי, צ'רי גרסיה, קוקי דו, פיש פוד",
-    icon: "🍦",
-    mapsQuery: "דיזנגוף 99 תל אביב",
-  },
-  {
-    id: 8,
-    name: "גלידרית האמנויות",
-    neighborhood: "הצפון הישן",
-    address: "רחוב גורדון 7, תל אביב",
-    phone: "03-555-8008",
-    hours: "יומי 10:00–23:00",
-    kosher: ["rabbinate"],
-    authority: "רבנות תל אביב",
-    flavors: "טעמים יצירתיים: לבנדר-דבש, זיתים שחורים, מלון-בזיל",
-    icon: "🎨",
-    mapsQuery: "גורדון 7 תל אביב",
-  },
-  {
-    id: 9,
-    name: "קפה גלידה",
-    neighborhood: "מרכז",
-    address: "רחוב אלנבי 60, תל אביב",
-    phone: "03-555-9009",
-    hours: "ראשון–שישי 08:00–22:00",
-    kosher: ["mehadrin", "chalav-yisrael"],
-    authority: "בד\"ץ העדה החרדית",
-    flavors: "אספרסו, קפה, שוקולד לבן, ווניל אפריקאי",
-    icon: "☕",
-    mapsQuery: "אלנבי 60 תל אביב",
-  },
-  {
-    id: 10,
-    name: "גלידת הים",
-    neighborhood: "נמל תל אביב",
-    address: "נמל תל אביב, חנות 5",
-    phone: "050-555-1010",
-    hours: "יומי 10:00–24:00",
-    kosher: ["rabbinate", "pareve"],
-    authority: "רבנות תל אביב–יפו",
-    flavors: "מלון, קוקוס, פינה קולדה, תות ים",
-    icon: "⚓",
-    mapsQuery: "נמל תל אביב",
-  },
-  {
-    id: 11,
-    name: "גלידת ירקרק",
-    neighborhood: "לב תל אביב",
-    address: "שדרות בן גוריון 12, תל אביב",
-    phone: "03-555-1111",
-    hours: "ראשון–חמישי 11:00–22:00, שישי 10:00–14:00",
-    kosher: ["mehadrin", "pareve"],
-    authority: "בד\"ץ מהדרין",
-    flavors: "אבוקדו, מטה, ספירולינה, שמן זית-לימון",
-    icon: "🥑",
-    mapsQuery: "בן גוריון 12 תל אביב",
-  },
-  {
-    id: 12,
-    name: "מר גלידה",
-    neighborhood: "בבלי",
-    address: "רחוב יהושע בן נון 8, בבלי, תל אביב",
-    phone: "03-555-1212",
-    hours: "ראשון–שישי 12:00–23:00",
-    kosher: ["rabbinate", "chalav-yisrael"],
-    authority: "רבנות תל אביב",
-    flavors: "גלידת שמנת, בציר, פירות יבשים, חלבה",
-    icon: "🍦",
-    mapsQuery: "יהושע בן נון 8 תל אביב",
+    name: "Komo.co.il",
+    icon: "🔍",
+    color: "#7b1fa2",
+    description: "פלטפורמה לנדל\"ן עם אפשרות סינון לסאבלט. תוצאות נוספות שאינן ביד2.",
+    tips: ["בחר 'טווח קצר' בסוג המגורים", "הוסף 'קרוב לים' בחיפוש הטקסטואלי"],
+    url: KOMO_URL,
+    badge: null,
   },
 ];
 
-const filterMap = {
-  mehadrin:       { label: "מהדרין",     cls: "badge-mehadrin"  },
-  rabbinate:      { label: "רבנות",      cls: "badge-rabbinate" },
-  "chalav-yisrael":{ label: "חלב ישראל", cls: "badge-chalav"    },
-  pareve:         { label: "פרווה",      cls: "badge-pareve"    },
-};
+const neighborhoods = [
+  {
+    name: "הצפון הישן",
+    icon: "🌊",
+    walkTime: "5–10 דקות",
+    priceRange: "6,500–8,000 ₪",
+    vibe: "שקט, יוקרתי, קרוב לטיילת",
+    streets: "הירקון, בן יהודה, דיזנגוף הצפוני",
+    seaAccess: "גישה ישירה לחוף גורדון ומציצים",
+    rating: 5,
+  },
+  {
+    name: "נווה צדק",
+    icon: "🏡",
+    walkTime: "10–15 דקות",
+    priceRange: "5,500–7,500 ₪",
+    vibe: "בוהמי, אמנותי, שקט יחסית",
+    streets: "שבזי, חולדה, שדרות ירושלים",
+    seaAccess: "חוף הצפוני של יפו ו-Charles Clore",
+    rating: 4,
+  },
+  {
+    name: "כרם התימנים",
+    icon: "🎨",
+    walkTime: "10–12 דקות",
+    priceRange: "5,000–7,000 ₪",
+    vibe: "תוסס, מעורב, קרוב לשוק ולים",
+    streets: "המסגר, הבנים, שדרות הרצל",
+    seaAccess: "חוף Charles Clore וחוף הצפון",
+    rating: 4,
+  },
+  {
+    name: "לב תל אביב (שינקין)",
+    icon: "🛍️",
+    walkTime: "12–15 דקות",
+    priceRange: "5,500–8,000 ₪",
+    vibe: "פולשני, מסחרי, מרכזי",
+    streets: "שינקין, בן יהודה הדרומי, ויצמן",
+    seaAccess: "חוף Charles Clore",
+    rating: 3,
+  },
+  {
+    name: "פלורנטין (צפון)",
+    icon: "🎭",
+    walkTime: "13–15 דקות",
+    priceRange: "5,000–6,500 ₪",
+    vibe: "היפסטרי, גרפיטי, חיי לילה",
+    streets: "פלורנטין, וולפסון, הפלמ\"ח",
+    seaAccess: "חוף Charles Clore / ולנסיה",
+    rating: 3,
+  },
+  {
+    name: "נמל תל אביב (צפון הצפון)",
+    icon: "⚓",
+    walkTime: "3–5 דקות",
+    priceRange: "7,000–8,000+ ₪",
+    vibe: "פרמיום, מסעדות, שוק הנמל",
+    streets: "הירקון צפוני, הנמל",
+    seaAccess: "הנמל עצמו, חוף הצפוני",
+    rating: 5,
+  },
+];
 
-let activeFilter = "all";
-let searchTerm   = "";
+const tips = [
+  { icon: "📅", text: "יולי הוא חודש שיא. פרסם את הבקשה שלך לפחות 3–4 שבועות מראש – כלומר עכשיו." },
+  { icon: "💬", text: "כתוב מודעת 'מחפש דירה' בכל הקבוצות: ציין תאריכים, מחיר, שכונה מועדפת, ופרטים עליך." },
+  { icon: "🤝", text: "פנה ישירות לדיירים בפייסבוק – לפעמים הם מחפשים מישהו ולא פרסמו עדיין." },
+  { icon: "📸", text: "לפני סגירת עסקה – בקש סיור וידאו או צ'אט לייב. אל תשלם מקדמה ללא אימות." },
+  { icon: "📋", text: "גבה חוזה בכתב גם לסאבלט קצר מועד – גם מסמך פשוט עם תאריכים ומחיר מספיק." },
+  { icon: "🗓️", text: "תאריכי גמישות? הצע כניסה ב-1 ביולי ויציאה ב-31 ביולי – חודש מלא מקל על המשכיר." },
+  { icon: "🌍", text: "בדוק גם Airbnb לדירות לחודש שלם – לעיתים זול יותר ממה שחושבים." },
+];
 
-function buildCard(shop) {
-  const badges = shop.kosher.map(k => {
-    const { label, cls } = filterMap[k];
-    return `<span class="badge ${cls}">${label}</span>`;
-  }).join("");
-
-  const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(shop.mapsQuery)}`;
-
-  return `
-    <article class="card">
-      <div class="card-header">
-        <span class="card-icon">${shop.icon}</span>
+function renderPlatforms() {
+  const grid = document.getElementById("platformsGrid");
+  grid.innerHTML = platforms.map(p => `
+    <a class="platform-card" href="${p.url}" target="_blank" rel="noopener"
+       style="--accent: ${p.color}">
+      <div class="platform-header">
+        <span class="platform-icon">${p.icon}</span>
         <div>
-          <div class="card-name">${shop.name}</div>
-          <div class="card-neighborhood">${shop.neighborhood}</div>
+          <div class="platform-name">${p.name}</div>
+          ${p.badge ? `<span class="platform-badge">${p.badge}</span>` : ""}
         </div>
       </div>
-      <div class="card-body">
-        <div class="card-row"><span class="icon">📍</span><span>${shop.address}</span></div>
-        <div class="card-row"><span class="icon">📞</span><span>${shop.phone}</span></div>
-        <div class="card-row"><span class="icon">🕐</span><span>${shop.hours}</span></div>
-        <div class="card-row"><span class="icon">✡️</span><span>${shop.authority}</span></div>
-        <div class="card-row"><span class="icon">🍨</span><span>${shop.flavors}</span></div>
-        <div class="badge-row">${badges}</div>
-      </div>
-      <div class="card-footer">
-        <a class="map-link" href="${mapsUrl}" target="_blank" rel="noopener">פתח במפה ↗</a>
-      </div>
-    </article>
-  `;
+      <p class="platform-desc">${p.description}</p>
+      <ul class="platform-tips">
+        ${p.tips.map(t => `<li>${t}</li>`).join("")}
+      </ul>
+      <div class="platform-cta">פתח חיפוש ↗</div>
+    </a>
+  `).join("");
 }
 
-function render() {
-  const term = searchTerm.trim().toLowerCase();
-
-  const filtered = shops.filter(shop => {
-    const matchesFilter =
-      activeFilter === "all" || shop.kosher.includes(activeFilter);
-
-    const searchable = [shop.name, shop.neighborhood, shop.address, shop.flavors, shop.authority]
-      .join(" ").toLowerCase();
-    const matchesSearch = !term || searchable.includes(term);
-
-    return matchesFilter && matchesSearch;
-  });
-
-  const grid = document.getElementById("cardsGrid");
-  const empty = document.getElementById("emptyState");
-  const count = document.getElementById("resultsCount");
-
-  if (filtered.length === 0) {
-    grid.innerHTML = "";
-    empty.classList.remove("hidden");
-    count.textContent = "";
-  } else {
-    empty.classList.add("hidden");
-    grid.innerHTML = filtered.map(buildCard).join("");
-    count.textContent = `נמצאו ${filtered.length} גלידריות`;
-  }
+function renderNeighborhoods() {
+  const grid = document.getElementById("neighborhoodsGrid");
+  grid.innerHTML = neighborhoods
+    .sort((a, b) => b.rating - a.rating)
+    .map(n => {
+      const stars = "★".repeat(n.rating) + "☆".repeat(5 - n.rating);
+      return `
+        <article class="neighborhood-card">
+          <div class="nb-header">
+            <span class="nb-icon">${n.icon}</span>
+            <div>
+              <div class="nb-name">${n.name}</div>
+              <div class="nb-stars">${stars}</div>
+            </div>
+          </div>
+          <div class="nb-body">
+            <div class="nb-row"><span class="nb-label">הליכה לים</span><span class="nb-value walk">${n.walkTime}</span></div>
+            <div class="nb-row"><span class="nb-label">מחיר משוער</span><span class="nb-value price">${n.priceRange}</span></div>
+            <div class="nb-row"><span class="nb-label">אווירה</span><span class="nb-value">${n.vibe}</span></div>
+            <div class="nb-row"><span class="nb-label">רחובות</span><span class="nb-value">${n.streets}</span></div>
+            <div class="nb-row"><span class="nb-label">גישה לחוף</span><span class="nb-value">${n.seaAccess}</span></div>
+          </div>
+          <a class="nb-map-btn"
+             href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(n.name + " תל אביב")}"
+             target="_blank" rel="noopener">
+            פתח במפה ↗
+          </a>
+        </article>
+      `;
+    }).join("");
 }
 
-document.getElementById("searchInput").addEventListener("input", e => {
-  searchTerm = e.target.value;
-  render();
-});
+function renderTips() {
+  const list = document.getElementById("tipsList");
+  list.innerHTML = tips.map(t => `
+    <li class="tip-item">
+      <span class="tip-icon">${t.icon}</span>
+      <span>${t.text}</span>
+    </li>
+  `).join("");
+}
 
-document.querySelectorAll(".filter-btn").forEach(btn => {
-  btn.addEventListener("click", () => {
-    document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
-    btn.classList.add("active");
-    activeFilter = btn.dataset.filter;
-    render();
-  });
-});
-
-render();
+renderPlatforms();
+renderNeighborhoods();
+renderTips();
