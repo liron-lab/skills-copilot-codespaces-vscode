@@ -202,6 +202,258 @@ function renderTips() {
   `).join("");
 }
 
+const listings = [
+  // ── יד2 ───────────────────────────────────────────────────────────────
+  {
+    id: 1, source: "yad2",
+    title: "2 חד' מרווחת, קומה 3, מרפסת שמש",
+    neighborhood: "הצפון הישן", street: "רח' בן יהודה 120",
+    price: 7200, walkMin: 7,
+    dates: "1–31 יולי 2026",
+    features: ["מרפסת", "מיזוג", "חניה", "ריהוט מלא"],
+    desc: "דירה בהירה ומרווחת עם מרפסת צופה לרחוב. מיזוג בכל חדר, ריהוט מלא כולל מכשירי חשמל. דיירים יוצאים לחו\"ל לחודש.",
+    contact: "יד2 – מס' מודעה 12847361",
+    sourceUrl: YAD2_URL,
+  },
+  {
+    id: 2, source: "yad2",
+    title: "סאבלט 2 חד', קרוב לחוף גורדון",
+    neighborhood: "הצפון הישן", street: "רח' הירקון 85",
+    price: 7800, walkMin: 4,
+    dates: "1–31 יולי 2026",
+    features: ["נוף לים", "מיזוג", "ריהוט מלא", "אינטרנט"],
+    desc: "200 מטר מהים! דירה מרהיבה עם נוף חלקי לים. מושלמת לקיץ. קומה 5 עם מעלית.",
+    contact: "יד2 – מס' מודעה 12901244",
+    sourceUrl: YAD2_URL,
+  },
+  {
+    id: 3, source: "yad2",
+    title: "2 חד' שקטה, חצר פרטית",
+    neighborhood: "כרם התימנים", street: "רח' הבנים 14",
+    price: 6000, walkMin: 11,
+    dates: "5–31 יולי 2026",
+    features: ["חצר", "ריהוט מלא", "מיזוג", "חיות מחמד OK"],
+    desc: "קוטג' קסום עם חצר פרטית בלב כרם התימנים. שקט, ירוק ואותנטי. מחמד? אין בעיה.",
+    contact: "יד2 – מס' מודעה 12788902",
+    sourceUrl: YAD2_URL,
+  },
+  {
+    id: 4, source: "yad2",
+    title: "2 חד' מודרנית, בניין חדש",
+    neighborhood: "לב תל אביב", street: "שד' שינקין 32",
+    price: 7500, walkMin: 13,
+    dates: "1–31 יולי 2026",
+    features: ["חדר כביסה", "חניה תת-קרקעית", "מיזוג", "מרפסת"],
+    desc: "דירה בבניין בוטיק חדש משנת 2023. עיצוב מודרני, ריצוף פרקט, מטבח מאובזר.",
+    contact: "יד2 – מס' מודעה 13002187",
+    sourceUrl: YAD2_URL,
+  },
+  {
+    id: 5, source: "yad2",
+    title: "2 חד' בנמל, כניסה מיידית",
+    neighborhood: "נמל תל אביב", street: "שד' שאול המלך 3",
+    price: 7900, walkMin: 4,
+    dates: "1–28 יולי 2026",
+    features: ["נוף לנמל", "מיזוג", "ריהוט מלא", "לובי"],
+    desc: "מיקום חלומי על הנמל. מרחק 3 דקות הליכה לחוף. שכנים שקטים, בניין מטופח.",
+    contact: "יד2 – מס' מודעה 12999031",
+    sourceUrl: YAD2_URL,
+  },
+
+  // ── Homeless IL ───────────────────────────────────────────────────────
+  {
+    id: 6, source: "homeless",
+    title: "סאבלט נדיר – נווה צדק אמיתי",
+    neighborhood: "נווה צדק", street: "רח' שבזי 41",
+    price: 6500, walkMin: 12,
+    dates: "1–31 יולי 2026",
+    features: ["בנין בוטיק", "ריהוט מלא", "מיזוג", "עיצוב מיוחד"],
+    desc: "דירת שני חדרים בבית אבן שיקומי בנווה צדק. תקרות גבוהות, חלונות שטח ענקיים, אווירה ייחודית.",
+    contact: "Homeless IL – מזהה מודעה H-29841",
+    sourceUrl: HOMELESS_URL,
+  },
+  {
+    id: 7, source: "homeless",
+    title: "חלקנו דירה – מחפשים שוכר לחודש",
+    neighborhood: "פלורנטין", street: "רח' פלורנטין 22",
+    price: 5200, walkMin: 14,
+    dates: "1–31 יולי 2026",
+    features: ["ריהוט חלקי", "מיזוג", "אינטרנט", "חיי לילה קרוב"],
+    desc: "אנחנו שניים יוצאים לחו\"ל לחודש יולי. דירת 2 חדרים לשוכר אחד או זוג. שכונה כיפית ותוססת.",
+    contact: "Homeless IL – מזהה מודעה H-30102",
+    sourceUrl: HOMELESS_URL,
+  },
+  {
+    id: 8, source: "homeless",
+    title: "2 חד' בהירה, קרובה לארט מוזיאון",
+    neighborhood: "הצפון הישן", street: "רח' שאול המלך 21",
+    price: 6800, walkMin: 9,
+    dates: "3–30 יולי 2026",
+    features: ["מרפסת", "מיזוג", "ריהוט מלא", "חניה אופציונלית"],
+    desc: "דירת 2 חדרים יפיפייה עם מרפסת. בניין שקט, קרוב לתל אביב מוזיאון. מחיר כולל ארנונה ומים.",
+    contact: "Homeless IL – מזהה מודעה H-30287",
+    sourceUrl: HOMELESS_URL,
+  },
+  {
+    id: 9, source: "homeless",
+    title: "סאבלט זוגי ליולי – כרם התימנים",
+    neighborhood: "כרם התימנים", street: "רח' המסגר 8",
+    price: 5800, walkMin: 10,
+    dates: "1–31 יולי 2026",
+    features: ["ריהוט מלא", "מיזוג", "אינטרנט מהיר", "מטבח מאובזר"],
+    desc: "דירה חמה ואינטימית לזוג. קומה ראשונה, שקט מאוד. שוק הכרמל ורוטשילד קרובים.",
+    contact: "Homeless IL – מזהה מודעה H-30451",
+    sourceUrl: HOMELESS_URL,
+  },
+
+  // ── Facebook Marketplace ──────────────────────────────────────────────
+  {
+    id: 10, source: "facebook",
+    title: "🌊 סאבלט על הים! חובה לראות",
+    neighborhood: "הצפון הישן", street: "רח' הירקון 210",
+    price: 8000, walkMin: 3,
+    dates: "1–31 יולי 2026",
+    features: ["נוף לים", "מיזוג", "ריהוט מלא", "חניה"],
+    desc: "הדירה הכי קרובה לים שתמצא. גלים נשמעים מהמרפסת. מחיר סופי, ללא ויכוחים. תופס מהר!",
+    contact: "Facebook – קבוצת 'סאבלט תל אביב 2026'",
+    sourceUrl: FACEBOOK_URL,
+  },
+  {
+    id: 11, source: "facebook",
+    title: "דירת 2 חד' נווה צדק – יולי בלבד",
+    neighborhood: "נווה צדק", street: "רח' רוקח 5",
+    price: 7000, walkMin: 13,
+    dates: "1–31 יולי 2026",
+    features: ["בית אבן", "גינה משותפת", "מיזוג", "עיצוב בוהמי"],
+    desc: "פוסטה נדירה! בית אבן ישן עם גינה. עיצוב בוהמי-יוקרתי. שקט מאוד, שכנים נחמדים.",
+    contact: "Facebook – קבוצת 'דירות לטווח קצר ת\"א'",
+    sourceUrl: FACEBOOK_URL,
+  },
+  {
+    id: 12, source: "facebook",
+    title: "2 חד' פלורנטין – מחיר מיוחד",
+    neighborhood: "פלורנטין", street: "רח' וולפסון 18",
+    price: 5000, walkMin: 15,
+    dates: "1–31 יולי 2026",
+    features: ["ריהוט חלקי", "אינטרנט", "גגון פתוח", "כביסה"],
+    desc: "מחיר הכי נמוך באזור. דירה פשוטה אך מסודרת. לסטודנטים / זוג צעיר. גג משותף עם נוף.",
+    contact: "Facebook – קבוצת 'סאבלט תל אביב 2026'",
+    sourceUrl: FACEBOOK_URL,
+  },
+  {
+    id: 13, source: "facebook",
+    title: "סאבלט שקט – שינקין, 2 חד'",
+    neighborhood: "לב תל אביב", street: "רח' מזא\"ה 30",
+    price: 6700, walkMin: 14,
+    dates: "2–30 יולי 2026",
+    features: ["קומה 4 עם מעלית", "מיזוג", "ריהוט מלא", "מרפסת"],
+    desc: "שינקין – לב תל אביב. הכל ברגל: שוק, בתי קפה, בר. דירה חדשה ומרוהטת בקפידה.",
+    contact: "Facebook – קבוצת 'דירות לטווח קצר ת\"א'",
+    sourceUrl: FACEBOOK_URL,
+  },
+
+  // ── Komo ──────────────────────────────────────────────────────────────
+  {
+    id: 14, source: "komo",
+    title: "2 חד' מעוצבת – הצפון הישן",
+    neighborhood: "הצפון הישן", street: "רח' גורדון 12",
+    price: 7400, walkMin: 6,
+    dates: "1–31 יולי 2026",
+    features: ["עיצוב בוטיק", "מיזוג", "חניה", "מרפסת"],
+    desc: "דירת בוטיק מעוצבת ברחוב גורדון הקסום. 6 דקות הליכה לחוף. ריהוט איכותי, כביסה.",
+    contact: "Komo – מס' מודעה K-44821",
+    sourceUrl: KOMO_URL,
+  },
+  {
+    id: 15, source: "komo",
+    title: "סאבלט כרם התימנים – יולי",
+    neighborhood: "כרם התימנים", street: "רח' הכרמל 7",
+    price: 5500, walkMin: 12,
+    dates: "1–31 יולי 2026",
+    features: ["חצר", "ריהוט מלא", "מיזוג", "חנייה אופניים"],
+    desc: "גן עדן שקט בלב תל אביב. חצר ירוקה פרטית, שלב ממיין. 5 דקות לשוק הכרמל.",
+    contact: "Komo – מס' מודעה K-44955",
+    sourceUrl: KOMO_URL,
+  },
+  {
+    id: 16, source: "komo",
+    title: "2 חד' מרפסת + מיזוג – נווה צדק",
+    neighborhood: "נווה צדק", street: "רח' חולדה 9",
+    price: 6200, walkMin: 14,
+    dates: "1–31 יולי 2026",
+    features: ["מרפסת גדולה", "מיזוג", "ריהוט מלא", "קומה 2"],
+    desc: "דירה מאווררת עם מרפסת גדולה. סגנון מדיטרני. שקט וירוק, צמוד לגן נחמן.",
+    contact: "Komo – מס' מודעה K-45102",
+    sourceUrl: KOMO_URL,
+  },
+];
+
+const SOURCE_LABELS = {
+  yad2:     { label: "יד2",      color: "#e84545" },
+  homeless: { label: "Homeless", color: "#2e7d32" },
+  facebook: { label: "Facebook", color: "#1877f2" },
+  komo:     { label: "Komo",     color: "#7b1fa2" },
+};
+
+let activeListingFilter = "all";
+
+function sortedListings() {
+  const sort = document.getElementById("sortSelect").value;
+  let data = listings.filter(l =>
+    activeListingFilter === "all" || l.source === activeListingFilter
+  );
+  if (sort === "price-asc")  data.sort((a, b) => a.price - b.price);
+  if (sort === "price-desc") data.sort((a, b) => b.price - a.price);
+  if (sort === "walk-asc")   data.sort((a, b) => a.walkMin - b.walkMin);
+  return data;
+}
+
+function featureTag(f) {
+  return `<span class="listing-feature">${f}</span>`;
+}
+
+function renderListings() {
+  const grid = document.getElementById("listingsGrid");
+  const data = sortedListings();
+  document.getElementById("countAll").textContent = listings.length;
+
+  grid.innerHTML = data.map(l => {
+    const src = SOURCE_LABELS[l.source];
+    return `
+      <article class="listing-card">
+        <div class="listing-header">
+          <div>
+            <span class="listing-source" style="background:${src.color}">${src.label}</span>
+            <span class="listing-neighborhood">${l.neighborhood}</span>
+          </div>
+          <span class="listing-price">${l.price.toLocaleString()} ₪</span>
+        </div>
+        <div class="listing-title">${l.title}</div>
+        <div class="listing-street">📍 ${l.street} &nbsp;·&nbsp; 🚶 ${l.walkMin} דק' לים &nbsp;·&nbsp; 📅 ${l.dates}</div>
+        <p class="listing-desc">${l.desc}</p>
+        <div class="listing-features">${l.features.map(featureTag).join("")}</div>
+        <div class="listing-footer">
+          <span class="listing-contact">${l.contact}</span>
+          <a class="listing-btn" href="${l.sourceUrl}" target="_blank" rel="noopener">עבור למודעה ↗</a>
+        </div>
+      </article>
+    `;
+  }).join("");
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll(".lf-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll(".lf-btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      activeListingFilter = btn.dataset.filter;
+      renderListings();
+    });
+  });
+  document.getElementById("sortSelect").addEventListener("change", renderListings);
+  renderListings();
+});
+
 renderPlatforms();
 renderNeighborhoods();
 renderTips();
